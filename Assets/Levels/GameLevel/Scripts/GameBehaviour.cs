@@ -27,7 +27,6 @@ public class GameBehaviour : MonoBehaviour
     {
         tree = Instantiate(tree, new Vector3(0, 0, 0), Quaternion.identity);        
         player = Instantiate(player, new Vector3(0, 0, -14.7f), Quaternion.Euler(-100, 0, 0));
-        gameInterface = Instantiate(gameInterface);
         gameInterface.worldCamera = player.GetComponentInChildren<Camera>();
         playerAnimator = player.GetComponent<Animator>();
         gameEvent += ScaleGameSpeed;
@@ -41,7 +40,6 @@ public class GameBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
-        Pause();
         if(runGame)
             gameEvent.Invoke(this, EventArgs.Empty);
         else 
@@ -71,8 +69,6 @@ public class GameBehaviour : MonoBehaviour
     {
         playerAnimator.Play("Run Forward In Place", 0);
     }
-
-    
 
     void HandleInput(object sender, EventArgs e)
     {
@@ -118,11 +114,13 @@ public class GameBehaviour : MonoBehaviour
         }
     }
 
-    void Pause()
+    public void Pause()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            runGame = !runGame;
-        }
+        runGame = false;
+    }
+
+    public void Resume()
+    {
+        runGame = true;
     }
 }
